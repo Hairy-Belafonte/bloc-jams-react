@@ -51,10 +51,29 @@ class Album extends Component {
      onMouseLeave() {
        this.setState({isHovered: false});
      }
+    handleSongHover(song) {
+      this.setState({ isHovered: song });
+    }
+  
+    handleIcon(song, index) {
+      let styles = {
+        margin: '300px'
+
+      }; 
+      if(this.state.currentSong === song && this.state.isPlaying) {
+        return <ion-icon name={"pause"} style={{styles}}></ion-icon>
+      } else if (this.state.isHovered === song && !this.state.isPlaying) {
+        return <ion-icon name="play"></ion-icon>
+      } else {
+        return index + 1 + '. ';
+      }
+    }
+
 
 
   render() {
-
+    
+    
     return (
       <section className="album">
       <section id="album-info">
@@ -73,33 +92,26 @@ class Album extends Component {
             </colgroup>
 
             <tbody>
-            {this.state.album.songs.map( (song, index) =>
-             <tr className="song" key={index} onClick={() => this.handleSongClick(song)} onMouseEnter={() => this.onMouseEnter(index)} onMouseLeave={() => this.onMouseLeave(index)}>
-                <td> <div id="song-action-btns">{
-                  (this.state.currentSong.title === song.title) ?
-                  (this.state.isPlaying) ? 
-                    <ion-icon name={"pause"}></ion-icon>
-                    : 
-                    <span className="song-number">{index+1}</span>
-                  :
-                  (this.state.isHovered === index) ?
-                  <ion-icon name="play"></ion-icon>
-                  :
-                  <span className="song-number">{index+1}</span>
+           
+{this.state.album.songs.map( ( song, index) =>
+  <tr className="song" key = {index} title ={this.state.album.songs.title} duration={this.state.album.songs.duration} onClick= { () => this.handleSongClick(song)}>
+    <td className="song-index" onMouseEnter={ () => this.handleSongHover(song)} onMouseLeave={ () => this.handleSongHover(null)}>
+        {this.handleIcon(song, index)}
+    </td>
+    <td>
+      { song.title }
+    </td>
+    <td>
+      { song.duration }
+    </td>
+  </tr>
+)}
 
-                    }</div>
-             </td>
-
-
-                <td className="song-title-row">{song.title}</td>
-                <td className="song-duration-row">{song.duration}</td>
-              </tr>
-            )}
-            </tbody>
-          </table>
-      </section>
-    );
-  }
+</tbody>
+</table>
+</section>
+);
+}
 }
 
 export default Album;
