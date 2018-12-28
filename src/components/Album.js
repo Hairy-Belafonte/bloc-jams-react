@@ -141,7 +141,7 @@ class Album extends Component {
             <div id="release-info">{this.state.album.releaseInfo}</div>
           </div>
         </section>
-        <table align="center" id="song-list">
+        <table align="center" id="song-list"  className="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
           <colgroup>
             <col id="song-number-column" />
             <col id="song-title-column" />
@@ -151,14 +151,14 @@ class Album extends Component {
           <tbody>
             {this.state.album.songs.map((song, index) => (
               <tr
-                className="song"
+                className="song mdl-data-table__cell--non-numeric" 
                 key={index}
                 title={this.state.album.songs.title}
                 duration={this.state.album.songs.duration}
                 onClick={() => this.handleSongClick(song)}
               >
                 <td
-                  className="song-index"
+                  className="song-index mdl-data-table__cell--non-numeric"
                   onMouseEnter={() => this.handleSongHover(song)}
                   onMouseLeave={() => this.handleSongHover(null)}
                 >
